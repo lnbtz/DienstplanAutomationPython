@@ -1,0 +1,8 @@
+python-dotenv
+imap-tools
+pymupdf
+psycopg2-binary
+SQLAlchemy
+alembic
+caldav
+icalendar

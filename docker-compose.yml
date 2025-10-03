@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports: ["5432:5432"]
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      ATTACHMENT_DIR: ${ATTACHMENT_DIR:-/app/attachments}
+      ICLOUD_USERNAME: ${ICLOUD_USERNAME}
+      ICLOUD_PASSWORD: ${ICLOUD_PASSWORD}
+      LOG_LEVEL: ${LOG_LEVEL:-DEBUG}
+      PYTHONUNBUFFERED: "1"
+    working_dir: /app/
+    command: ["python", "-m", "shiftbot.main"]
+    depends_on: [db]
+
+volumes:
+  db_data:
