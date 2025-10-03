@@ -33,7 +33,7 @@ def fetch_emails():
     stats = {"scanned": 0, "matched": 0, "skipped": 0, "failures": 0}
     mailbox = MailBox('imap.mail.me.com').login(USERNAME, PASSWORD)
     with mailbox:
-        for mail in mailbox.fetch(reverse=True, limit=5):
+        for mail in mailbox.fetch(reverse=True, limit=20):
             stats["scanned"] += 1
             logger = logging.getLogger("shiftbot")
             try:
