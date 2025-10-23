@@ -18,6 +18,7 @@ ALLOWED_SENDERS = {"leonbeitz@hotmail.de", "d.back@c68ad.de"}
 STORAGE_DIR = Path(os.getenv("ATTACHMENT_DIR", "attachments"))
 USERNAME = os.getenv("ICLOUD_USERNAME")
 PASSWORD = os.getenv("ICLOUD_PASSWORD")
+IMAP_SERVER = os.getenv("ICLOUD_IMAP_SERVER", "imap.mail.me.com")
 try:
     assert USERNAME is not None
     assert PASSWORD is not None
@@ -31,7 +32,7 @@ def fetch_emails():
     Returns a stats dict: scanned, matched, skipped, failures.
     """
     stats = {"scanned": 0, "matched": 0, "skipped": 0, "failures": 0}
-    mailbox = MailBox('imap.mail.me.com').login(USERNAME, PASSWORD)
+    mailbox = MailBox(IMAP_SERVER).login(USERNAME, PASSWORD)
     with mailbox:
         for mail in mailbox.fetch(reverse=True, limit=20):
             stats["scanned"] += 1
