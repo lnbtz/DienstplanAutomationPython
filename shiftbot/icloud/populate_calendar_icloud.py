@@ -13,7 +13,7 @@ from shiftbot.util import create_sha256_hash
 
 provider = "icloud"
 load_dotenv()
-CALENDAR_NAME = "Work"
+CALENDAR_NAME = "Arbeit"
 USERNAME = os.getenv("ICLOUD_USERNAME")
 PASSWORD = os.getenv("ICLOUD_PASSWORD")
 try:
